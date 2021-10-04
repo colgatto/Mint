@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>{{BOOTSTRAP_CSS}}</style>
+	<style>{{STYLE}}</style>
+	<title>Task List</title>
+	<script>{{JQUERY}}</script>
+	<script>{{POPPER}}</script>
+	<script>{{BOOTSTRAP_JS}}</script>
+	<script>{{TASK}}</script>
+</head>
+<body>
+	<a class="btn btn-primary w-100" href="?action=monitor">Task Monitor</a>
+	<div class="spinner">
+		<div class="ring"></div>
+		<div class="ring"></div>
+		<div class="dot"></div>
+	</div>
+	<div class="row container m-auto" style="height: 100%;">
+		<div class="col-12 mt-4">
+			<ul id="taskList" class="list-group hidden"></ul>
+		</div>
+	</div>
+	<script>
+
+		const playIcon = '<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="play" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-play fa-w-14 fa-3x"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" class=""></path></svg>';
+
+		const makeHtmlParams = (v, prefix) => {
+
+			let params = Object.keys(v.params);
+			let htmlParams = '';	
+			for(let j = 0; j < params.length; j++){
+				let pName = params[j];
+				let pType = v.params[pName];
+				let pInput = '<div class="form-group row"><label for="task_param_' + prefix + '_' + j + '" class="col-md-2 col-form-label">' + pName + '</label>';
+				pInput += '<div class="col-md-10">';
+				switch(pType){
+					case 'INT':
+						pInput += '<input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="number" step="1" onkeyup="this.value=this.value.replace(/[^0-9]/g,\'\');" name="' + pName + '" data-type="int">';
+						break;
+					case 'FLOAT':
+						pInput += '<input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="number" step="0.01" name="' + pName + '" data-type="float">';
+						break;
+					case 'BOOL':
+						pInput += '<div class="bool-wrapper"><input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="checkbox" name="' + pName + '" data-type="bool"></div>';
+						break;
+					default:
+						if(pType.charAt(0) == 'L'){
+							let vList = JSON.parse(pType.slice(1));
+							console.log(vList);
+							let vk = Object.keys(vList);
+							pInput += '<select id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" name="' + pName + '" data-type="list">'
+									+ vk.map( k => '<option value="' + k + '">' + vList[k] + '</option>')
+								+ '</select>';
+						}else{
+							pInput += '<input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="text" name="' + pName + '" data-type="string">'
+						}
+						break;
+				}
+				pInput += '</div></div>';
+				htmlParams += pInput;
+			}
+			return htmlParams;
+		};
+
+		askApi('taskList').then(data => {
+			
+			let htmlList = '';
+			for(let i = 0; i < data.length;i++){
+				let v = data[i];
+				
+				htmlList += '<li class="list-group-item">'
+					+ '<h4>' + v.name + '</h4>'
+					+ '<p>' + v.description + '</p>'
+					+ '<code>' + v.path + '</code>'
+					+ '<button class="btn btn-primary start-task" data-task="' + v.task + '">' + playIcon + '</button>'
+					+ '<form class="task-parameters">'
+						+ makeHtmlParams(v, i)
+					+ '</form>'
+				+ '</li>';
+			}
+			$('#taskList').html( htmlList );
+
+			$('.spinner').addClass('hidden');
+			$('#taskList').removeClass('hidden');
+		});
+	
+		$(document).on('click', '.start-task', function(e){
+			let t = $(e.currentTarget);
+			let taskName = t.data('task');
+			let inps = $('.task-parameters .taskInput').toArray();
+			let params = {};
+			for(let i = 0; i < inps.length; i++){
+				let o = $(inps[i]);
+				let pName = o.attr('name');
+				let pVal = o.data('type') == 'bool' ? o.prop('checked') : o.val();
+				params[pName] = pVal;
+			}
+			runTask(taskName, params).then(data => {
+				document.location.href = 'index.php';
+			});
+			
+		});
+
+	</script>
+</body>
+</html>

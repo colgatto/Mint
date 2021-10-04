@@ -1,0 +1,181 @@
+:root {
+	--main-color: #007bff;
+	--second-color: #268fff;
+}
+*{
+	outline: 0;
+}
+html,body{
+	height: 100%;
+}
+textarea{
+	width: 100%;
+	min-height: 10rem;
+	height: 20rem;
+}
+.card{
+	margin: 2rem;
+}
+.row{
+	margin: 0;
+}
+.col{
+	padding: 0;
+}
+.bg-danger,
+.bg-success{
+	color: #fff;
+}
+.li_task{
+	cursor: pointer;
+}
+.li_task label{
+	width: 100%;
+}
+.hidden{
+	display: none !important;
+}
+#progress-td{
+	width: 100%;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+.card-footer button{
+	width: auto;
+}
+.spn_start_date,
+.spn_uptime {
+	font-size: 0.7rem;
+}
+.spn_uptime{
+	float: right;
+}
+/*
+#monitorList{
+	overflow: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+*/
+#monitorList .badge {
+	float: left;
+	margin-right: 0.25rem;
+}
+
+#monitorList .btn_del_task {
+	padding: 0;
+	font-size: small;
+	position: absolute;
+	right: 0.25rem;
+	top: 0.25rem;
+	color: #fff;
+	display: flex;
+	padding: 0.2rem;
+	justify-content: center;
+	vertical-align: middle;
+}
+
+#monitorList .btn_del_task svg{
+	height: 0.8rem;
+	width: 0.8rem;
+}
+
+#task_data table{
+	width: 100%;
+}
+
+#taskList .list-group-item{
+	padding-right: 3.25rem;
+}
+#taskList p{
+	display: block;
+	margin-bottom: 0.4rem;
+}
+#taskList code{
+	display: block;
+	margin-bottom: 0.4rem;
+}
+
+.start-task{
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	border-radius: 0;
+	width: 2rem;
+	padding: 0;
+}
+.start-task svg{
+	max-width: 1rem;
+}
+
+.task-parameters .bool-wrapper{
+	display: flex;
+	height: 100%;
+	align-items: center;
+}
+.task-parameters input[type="checkbox"],
+.task-parameters input[type="radio"] {
+	max-width: 1rem;
+    margin: 0 auto;
+}
+
+/* SPINNER */
+
+.spinner {
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	align-items: center;
+	width: 5rem;
+	height: 5rem;
+	margin: 0 auto;
+}
+
+.spinner div {
+	position: absolute;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+}
+.spinner div.ring {
+	border-width: 0.5rem;
+	border-style: solid;
+	border-color: transparent;
+	-webkit-animation: 2s fancy infinite alternate;
+	animation: 2s fancy infinite alternate;
+}
+.spinner div.ring:nth-child(1) {
+	border-left-color: var(--second-color);
+	border-right-color: var(--second-color);
+}
+.spinner div.ring:nth-child(2) {
+	border-top-color: var(--main-color);
+	border-bottom-color: var(--main-color);
+	-webkit-animation-delay: 1s;
+	animation-delay: 1s;
+}
+.spinner div.dot {
+	width: 1rem;
+	height: 1rem;
+	background: var(--second-color);
+}
+
+@-webkit-keyframes fancy {
+	to {
+		-webkit-transform: rotate(360deg) scale(0.5);
+		transform: rotate(360deg) scale(0.5);
+	}
+}
+
+@keyframes fancy {
+	to {
+		-webkit-transform: rotate(360deg) scale(0.5);
+		transform: rotate(360deg) scale(0.5);
+	}
+}
+
+/* END SPINNER */

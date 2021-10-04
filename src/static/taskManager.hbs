@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>{{BOOTSTRAP_CSS}}</style>
+	<style>{{STYLE}}</style>
+	<title>Task Manager</title>
+	<script>{{JQUERY}}</script>
+	<script>{{POPPER}}</script>
+	<script>{{BOOTSTRAP_JS}}</script>
+	<script>{{TASK}}</script>
+</head>
+<body>
+	<div id="manager">
+		<a class="btn btn-primary w-100" href="?action=list">Task List</a>
+		<div class="spinner">
+			<div class="ring"></div>
+			<div class="ring"></div>
+			<div class="dot"></div>
+		</div>
+		<div class="row hidden" style="height: 100%;">
+			<div class="col col-3">
+				<ul id="monitorList" class="list-group list-group-flush"></ul>
+			</div>
+			<div class="col col-9">
+				<div id="task_data" class="card hidden">
+					<h5 class="card-header"></h5>
+					<div class="card-body">
+						<table>
+							<tr>
+								<td id="task_info_path"></td>
+								<td id="task_info_status"></td>
+							</tr>
+							<tr>
+								<td id="task_info_start"></td>
+								<td id="task_info_uptime"></td>
+							</tr>
+							<tr>
+								<td id="task_info_stop"></td>
+								<td id="task_info_pid"></td>
+							</tr>
+						</tr>
+						</table>
+						<textarea class="card-text" readonly></textarea>
+					</div>
+					<div class="card-footer">
+						<table><tr><td id="progress-td"></td><td id="kill-td"></td></tr></table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		createSocket();
+	</script>
+</body>
+</html>

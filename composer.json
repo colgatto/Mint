@@ -1,0 +1,24 @@
+{
+    "name": "colgatto/mint",
+    "type": "library",
+    "description": "Background task manager for linux, PHP Backend + Web GUI",
+    "keywords": [ "task", "process", "manager" ],
+    "homepage": "https://github.com/colgatto/Mint",
+    "license": "RWTFPL",
+    "authors": [{
+		"name": "Colgatto",
+		"email": "colgatto@protonmail.com",
+		"homepage": "https://github.com/colgatto",
+		"role": "Developer"
+	}],
+	"minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.9",
+		"cboden/ratchet": "0.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Mint": "src/"
+        }
+    }
+}
