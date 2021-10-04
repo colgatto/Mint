@@ -4,7 +4,7 @@
     "description": "Background task manager for linux, PHP Backend + Web GUI",
     "keywords": [ "task", "process", "manager" ],
     "homepage": "https://github.com/colgatto/Mint",
-    "license": "RWTFPL",
+    "license": "WTFPL",
     "authors": [{
 		"name": "Colgatto",
 		"email": "colgatto@protonmail.com",
