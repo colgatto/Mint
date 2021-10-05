@@ -1,59 +1,5 @@
-# Mint (Mint Is Not Taskhost.exe)
-
-Spawn, Monitor & Manage Background Task on Linux from Web GUI
-
-### Task Monitor
-![taskMonitor](https://i.imgur.com/TqONuCl.png)
-
-### Task List
-![taskList](https://i.imgur.com/Dbfoza9.png)
-
-## Install
-
-```sh
-composer require colgatto/mint
-```
-
-Make sure Mint directory has the right privileges, if php can't create file inside it, Mint doesn't work
-
-Run something like this from your project directory to give Mint the right privilages
-
-```sh
-sudo chown www-data:www-data -R ./vendor/colgatto/mint
-```
-
-## Usage
-
-`www/api.php`
-```php
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use Mint\ApiEngine;
-
-//tell the manager where are located the tasks
-ApiEngine::start(__DIR__ . '/../tasks');
-
-?>
-```
-
-`www/index.php`
-```php
-<?php 
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use Mint\WebGui;
-
-WebGui::start();
-
-?>
-```
-
-`tasks/example.php`
-```php
-<?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Mint\Task;
@@ -93,13 +39,23 @@ $task->setMaxProgress(10);
 //do stuff
 Task::log('wait 10 seconds then exit');
 for ($i=0; $i < 10; $i++) {
-	Task::log( ($i+1) );
-	$task->incProgress(); //increment progress bar by 1
-	sleep(1); //wait
+	try{
+		Task::log( ($i+1) );
+		//increment progress bar by 1
+		$task->incProgress();
+		//wait
+		sleep(1);
+	}catch(Exception $e){
+		//terminate task with error
+		$task->terminate('error');
+		//terminate method can be used outside the task code (this file) so it can't trigger "die" or "exit" function
+		//it is used just to tell the manager that is terminate
+		//always remember to kill process just after $task->terminate() if is not at the end of file
+		throw $e;
+	}
 }
 
 //terminate task
 $task->terminate();
 
 ?>
-```
