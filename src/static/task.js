@@ -56,7 +56,7 @@ const createSocket = (i=0) => {
 		console.error('Too many error');
 		return;
 	}
-	ws_task_server = new WebSocket('ws://10.0.0.115:8087');
+	ws_task_server = new WebSocket('ws://' + SERVER_IP + ':8087');
 	ws_task_server.onerror = function(e) {
 		askApi('startMonitorServer').then(()=>{
 			setTimeout(()=>{

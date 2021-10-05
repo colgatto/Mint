@@ -186,6 +186,9 @@ class Task {
 	
 	private function initWDir(){
 		$globalWorkinkDir = __DIR__ . '/../../storage_task/';
+		if(!is_dir($globalWorkinkDir)){
+			mkdir($globalWorkinkDir);
+		}
 		$otherTaskId = [];
 		foreach (scandir($globalWorkinkDir) as $v) {
 			if(!preg_match('/^p_\d+$/', $v)) continue;
