@@ -70,7 +70,7 @@ define('TASK_PARAMS', [
 ]);
 
 //start the task
-//use Task::cli_start(true) if you want singletone task (block multiple instances of same task)
+//use Task::cli_start(true) if you want singleton task (block multiple instances of same task)
 $task = Task::cli_start();
 
 //get task parameters
