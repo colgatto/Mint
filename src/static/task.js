@@ -120,12 +120,12 @@ const renderTaskList = ()=>{
 	for (let i = 0, l = taskList.length; i < l; i++) {
 		const task = taskList[i];
 		list += '<li id="li_task_' + task.id + '" class="li_task list-group-item" data-index="' + i + '">'
-			+ renderDelButton(task, true)
-			+ statusBadge[task.status]
-			+ '<span class="spn_start_date">' + task.start_time + '</span>'
-			+ '<label class="lbl_task_title">[' + task.id + '] ' + task.task_path.slice(task.task_path.lastIndexOf('/')+1) + '</label>'
-			+ renderTaskProgress(task)
-		+ '</li>';
+				+ renderDelButton(task, true)
+				+ statusBadge[task.status]
+				+ '<span class="spn_start_date">' + task.start_time + '</span>'
+				+ '<label class="lbl_task_title">[' + task.id + '] ' + task.task_path.slice(task.task_path.lastIndexOf('/')+1) + '</label>'
+				+ renderTaskProgress(task)
+			+ '</li>';
 		if(i == openTaskIndex){
 			renderTaskCard();
 		}

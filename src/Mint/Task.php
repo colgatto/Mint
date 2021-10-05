@@ -170,6 +170,12 @@ class Task {
 		if( !defined('TASK_PARAMS') || !isset(TASK_PARAMS[$p]) ){
 			trigger_error('use undefined task param', E_USER_WARNING);
 		}else{
+			if(is_array(TASK_PARAMS[$p])){
+				if(!in_array($this->params[$p], TASK_PARAMS[$p])){
+					trigger_error('value of ' . $p . ' not present in the list provided by TASK_PARAMS', E_USER_WARNING);
+				}
+				return $this->params[$p];
+			}
 			switch(TASK_PARAMS[$p]){
 				case Settings::TYPE_BOOL:
 					return boolval($this->params[$p]);

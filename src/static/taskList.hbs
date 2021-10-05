@@ -36,30 +36,33 @@
 				let pName = params[j];
 				let pType = v.params[pName];
 				let pInput = '<div class="form-group row"><label for="task_param_' + prefix + '_' + j + '" class="col-md-2 col-form-label">' + pName + '</label>';
-				pInput += '<div class="col-md-10">';
-				switch(pType){
-					case 'INT':
-						pInput += '<input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="number" step="1" onkeyup="this.value=this.value.replace(/[^0-9]/g,\'\');" name="' + pName + '" data-type="int">';
-						break;
-					case 'FLOAT':
-						pInput += '<input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="number" step="0.01" name="' + pName + '" data-type="float">';
-						break;
-					case 'BOOL':
-						pInput += '<div class="bool-wrapper"><input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="checkbox" name="' + pName + '" data-type="bool"></div>';
-						break;
-					default:
-						if(pType.charAt(0) == 'L'){
-							let vList = JSON.parse(pType.slice(1));
-							console.log(vList);
-							let vk = Object.keys(vList);
-							pInput += '<select id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" name="' + pName + '" data-type="list">'
-									+ vk.map( k => '<option value="' + k + '">' + vList[k] + '</option>')
-								+ '</select>';
-						}else{
+				pInput += '<div class="col-md-10">';	
+				if(typeof pType == 'string'){
+					switch(pType){
+						case 'INT':
+							pInput += '<input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="number" step="1" onkeyup="this.value=this.value.replace(/[^0-9]/g,\'\');" name="' + pName + '" data-type="int">';
+							break;
+						case 'FLOAT':
+							pInput += '<input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="number" step="0.01" name="' + pName + '" data-type="float">';
+							break;
+						case 'BOOL':
+							pInput += '<div class="bool-wrapper"><input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="checkbox" name="' + pName + '" data-type="bool"></div>';
+							break;
+						default:
 							pInput += '<input id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" type="text" name="' + pName + '" data-type="string">'
-						}
-						break;
+							break;
+					}
+				}else if(pType instanceof Array){
+					pInput += '<select id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" name="' + pName + '" data-type="list">'
+						+ pType.map( k => '<option value="' + k + '">' + k + '</option>')
+					+ '</select>';
+				}else if(pType instanceof Object){
+					let pTypeKeys = Object.keys(pType);
+					pInput += '<select id="task_param_' + prefix + '_' + j + '" class="form-control taskInput" name="' + pName + '" data-type="list">'
+						+ pTypeKeys.map( k => '<option value="' + pType[k] + '">' + k + '</option>')
+					+ '</select>';
 				}
+				
 				pInput += '</div></div>';
 				htmlParams += pInput;
 			}
